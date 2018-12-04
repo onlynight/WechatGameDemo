@@ -1,5 +1,6 @@
-import Animation from('../base/animation')
-import DataBus from('../databus')
+import Animation from '../base/animation'
+import DataBus from '../databus'
+import '../libs/symbol'
 
 const ENEMY_IMG_SRC = 'images/enemy.png'
 const ENEMY_WIDTH = 60
@@ -12,13 +13,21 @@ const __ = {
 let databus = new DataBus()
 
 function rnd(start, end) {
-  Math.floor(Math.random() * (end - start) + start)
+  return Math.floor(Math.random() * (end - start) + start)
 }
 
 export default class Enemy extends Animation {
 
   constructor() {
     super(ENEMY_IMG_SRC, ENEMY_WIDTH, ENEMY_HEIGHT)
+  }
+
+  init(speed) {
+    this.x = rnd(0, window.innerWidth - ENEMY_WIDTH)
+    this.y = -this.height
+    this[__.speed] = speed
+
+    this.visible = true
   }
 
   initExplosionAnimation() {

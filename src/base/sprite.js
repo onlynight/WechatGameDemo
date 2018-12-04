@@ -22,10 +22,10 @@ export default class Sprite {
 
     ctx.drawImage(
       this.img,
-      this.width,
-      this.height,
       this.x,
-      this.y
+      this.y,
+      this.width,
+      this.height
     );
   }
 
@@ -36,14 +36,14 @@ export default class Sprite {
     let spX = sp.x + sp.width / 2;
     let spY = sp.y + sp.height / 2;
 
-    if(!this.visible||!sp.visible){
+    if (!this.visible || !sp.visible) {
       return false;
     }
 
-    return !!( spX >= this.x 
-            && spX <= this.x + this.width
-            && spY >= this.y
-            && spY <= this.y + this.height)
+    return !!(spX >= this.x &&
+      spX <= this.x + this.width &&
+      spY >= this.y &&
+      spY <= this.y + this.height)
   }
 
 }

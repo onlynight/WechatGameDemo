@@ -19,7 +19,7 @@ export default class Animation extends Sprite {
     this.index = -1
     this.count = 0
     this.imgList = []
-    databus.animation.push(this);
+    databus.animations.push(this);
   }
 
   initFrames(imgList) {
@@ -37,7 +37,7 @@ export default class Animation extends Sprite {
     ctx.drawImage(
       this.imgList[this.index],
       this.x,
-      this, y,
+      this.y,
       this.width * 1.2,
       this.height * 1.2
     )
@@ -68,13 +68,13 @@ export default class Animation extends Sprite {
   frameLoop() {
     this.index++
 
-    if (this.index > this.count - 1) {
-      if (this.loop) {
-        this.index = 0
-      } else {
-        this.index--
-          this.stop()
+      if (this.index > this.count - 1) {
+        if (this.loop) {
+          this.index = 0
+        } else {
+          this.index--
+            this.stop()
+        }
       }
-    }
   }
 }
