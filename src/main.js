@@ -30,13 +30,16 @@ export default class Main {
       canvas
     )
 
+    canvas.addEventListener('touchstart', ((e) => {
+      e.preventDefault()
+
+      console.log('test');
+    }))
   }
 
   enemyGenerate() {
     if (databus.frame % 30 === 0) {
       let enemy = databus.pool.getItemByClass('enemy', Enemy)
-      // console.log(enemy.img.src)
-      // console.log(enemy.x + ' ' + enemy.y)
       enemy.init(6)
       databus.enemys.push(enemy)
     }
@@ -73,9 +76,9 @@ export default class Main {
   }
 
   loop() {
-    databus.frame++
+    databus.frame++;
 
-      this.update()
+    this.update()
     this.render()
 
     this.animId = window.requestAnimationFrame(
