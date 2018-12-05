@@ -6,6 +6,8 @@ const ENEMY_IMG_SRC = 'images/enemy.png'
 const ENEMY_WIDTH = 60
 const ENEMY_HEIGHT = 60
 
+let ctx = canvas.getContext('2d')
+
 const __ = {
   speed: Symbol('speed')
 }
@@ -20,6 +22,8 @@ export default class Enemy extends Animation {
 
   constructor() {
     super(ENEMY_IMG_SRC, ENEMY_WIDTH, ENEMY_HEIGHT)
+
+    this.initExplosionAnimation()
   }
 
   init(speed) {
@@ -28,6 +32,7 @@ export default class Enemy extends Animation {
     this[__.speed] = speed
 
     this.visible = true
+    this.played = false
   }
 
   initExplosionAnimation() {
@@ -36,8 +41,8 @@ export default class Enemy extends Animation {
     const EXPLO_IMG_PREFIX = 'images/explosion'
     const EXPLO_FRAME_COUNT = 19
 
-    for (let i = 0; i < EXPLO_FRAME_COUNT; i++) {
-      frames.push(EXPLO_IMG_PREFIX + (i + 1) + '.png')
+    for (let i = 1; i <= EXPLO_FRAME_COUNT; i++) {
+      frames.push(EXPLO_IMG_PREFIX + i + '.png')
     }
 
     this.initFrames(frames)
@@ -48,6 +53,11 @@ export default class Enemy extends Animation {
 
     if (this.y > window.innerHeight + this.height) {
       databus.removeEnemy(this)
+    }
+
+    if (this.y >= window.innerHeight / 3 && !this.isPlaying && !this.played) {
+      this.playAnimation()
+      this.played = true
     }
   }
 

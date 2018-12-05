@@ -32,7 +32,7 @@ export default class DataBus {
     this.pool.recover('enemy', enemy)
   }
 
-  removeBullet(bullet) {
+  removeBullets(bullet) {
     let temp = this.bullets.shift()
 
     temp.visible = false

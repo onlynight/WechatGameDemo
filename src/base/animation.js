@@ -23,7 +23,7 @@ export default class Animation extends Sprite {
   }
 
   initFrames(imgList) {
-    imgList.foreach((imgSrc) => {
+    imgList.forEach((imgSrc) => {
       let img = new Image()
       img.src = imgSrc
 
@@ -52,7 +52,8 @@ export default class Animation extends Sprite {
 
     if (this.interval > 0 && this.count) {
       this[__.timer] = setInterval(
-        this.frameLoop.bind(this)
+        this.frameLoop.bind(this),
+        this.interval
       )
     }
   }
@@ -68,13 +69,13 @@ export default class Animation extends Sprite {
   frameLoop() {
     this.index++
 
-      if (this.index > this.count - 1) {
-        if (this.loop) {
-          this.index = 0
-        } else {
-          this.index--
-            this.stop()
-        }
+    if (this.index > this.count - 1) {
+      if (this.loop) {
+        this.index = 0
+      } else {
+        this.index--
+          this.stop()
       }
+    }
   }
 }

@@ -14,7 +14,7 @@
 	"compileType": "game",
 	"libVersion": "2.4.1",
 	"appid": "wxfa1f3ccf09af9f47",
-	"projectname": "Demo1",
+	"projectname": "WechatGameDemo",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

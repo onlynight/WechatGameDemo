@@ -2,6 +2,7 @@ import './libs/weapp-adapter'
 import Enemy from './npc/enemy'
 import DataBus from './databus'
 import Logo from './runtime/logo'
+import Player from './player/player.js'
 import Background from './runtime/background.js'
 
 let drawLogo = require('./runtime/drawLogo')
@@ -22,6 +23,7 @@ export default class Main {
     databus.reset()
 
     this.bg = new Background(ctx)
+    this.player = new Player()
 
     this.bindLoop = this.loop.bind(this)
     window.cancelAnimationFrame(this.animId)
@@ -30,11 +32,6 @@ export default class Main {
       canvas
     )
 
-    canvas.addEventListener('touchstart', ((e) => {
-      e.preventDefault()
-
-      console.log('test');
-    }))
   }
 
   enemyGenerate() {
@@ -54,12 +51,18 @@ export default class Main {
       item.drawToCanvas(ctx)
     })
 
-    logo.drawLogo(ctx)
+    this.player.drawToCanvas(ctx)
+
+    // logo.drawLogo(ctx)
 
     databus.animations.forEach((ani) => {
       if (ani.isPlaying) {
         ani.aniRender(ctx)
       }
+    })
+
+    databus.bullets.forEach((bullet) => {
+      bullet.drawToCanvas(ctx)
     })
 
   }
@@ -71,8 +74,15 @@ export default class Main {
       item.update()
     })
 
+    databus.bullets.forEach((bullet) => {
+      bullet.update()
+    })
+
     this.enemyGenerate()
 
+    if (databus.frame % 60 === 0) {
+      this.player.shoot(ctx)
+    }
   }
 
   loop() {

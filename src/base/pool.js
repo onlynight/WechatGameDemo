@@ -29,16 +29,19 @@ export default class Pool {
   getItemByClass(name, className) {
     let pool = this.getPoolBySign(name);
 
-    let result = (pool.length ? pool.shift() : new className())
+    // let result = (pool.length ? pool.shift() : new className())
+    let result = (pool.length ?
+      pool.shift() :
+      new className())
 
     return result
   }
-  
+
   /**
    * 将对象回收到对象池
    * 方便重复利用
    */
-  recover(name, instance){
+  recover(name, instance) {
     this.getPoolBySign(name).push(instance)
   }
 }
