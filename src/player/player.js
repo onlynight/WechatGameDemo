@@ -71,7 +71,7 @@ export default class Player extends Sprite {
 
   shoot(ctx) {
     let bullet = databus.pool.getItemByClass('bullet', Bullet)
-    bullet.init(this.x + PLAYER_WIDTH / 2, this.y - PLAYER_HEIGHT / 2, 2)
+    bullet.init(this.x + PLAYER_WIDTH / 2, this.y - PLAYER_HEIGHT / 2, 10)
 
     databus.bullets.push(bullet)
   }

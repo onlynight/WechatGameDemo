@@ -32,11 +32,23 @@ export default class DataBus {
     this.pool.recover('enemy', enemy)
   }
 
-  removeBullets(bullet) {
-    let temp = this.bullets.shift()
+  removeBullet(bullet) {
+    // let temp = this.bullets.shift()
+    let temp = null
+    let index = -1
 
-    temp.visible = false
+    for (let i = 0; i < this.bullets.length; i++) {
+      if (bullet.index === this.bullets[i].index) {
+        temp = this.bullets[i]
+        index = i
+        break
+      }
+    }
 
-    this.pool.recover('bullet', bullet)
+    if (temp != null) {
+      this.bullets.splice(index, 1)
+      temp.visible = false
+      this.pool.recover('bullet', temp)
+    }
   }
 }

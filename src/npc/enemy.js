@@ -54,11 +54,6 @@ export default class Enemy extends Animation {
     if (this.y > window.innerHeight + this.height) {
       databus.removeEnemy(this)
     }
-
-    if (this.y >= window.innerHeight / 3 && !this.isPlaying && !this.played) {
-      this.playAnimation()
-      this.played = true
-    }
   }
 
 }

@@ -6,6 +6,7 @@ const BULLET_WIDTH = 62 / 4
 const BULLET_HEIGHT = 108 / 4
 
 let databus = new DataBus()
+let index = -1
 
 const __ = {
   speed: Symbol('speed')
@@ -15,6 +16,7 @@ export default class Bullet extends Animation {
 
   constructor() {
     super(BULLET_IMG_SRC, BULLET_WIDTH, BULLET_HEIGHT)
+    this.index = index++
   }
 
   init(x, y, speed) {
@@ -26,11 +28,14 @@ export default class Bullet extends Animation {
   }
 
   update() {
+    if (!this.visible) {
+      return
+    }
+
     this.y -= this[__.speed]
-    console.log(this[__.speed])
 
     if (this.y < -this.height) {
-      databus.removeBullets(this)
+      databus.removeBullet(this)
     }
   }
 

@@ -9,9 +9,6 @@ let drawLogo = require('./runtime/drawLogo')
 let ctx = canvas.getContext('2d')
 let databus = new DataBus()
 
-let logo = new Logo('images/hero.png', 186 / 2, 130 / 2,
-  window.innerWidth / 2 - 186 / 4, window.innerHeight / 2 - 130 / 4)
-
 export default class Main {
 
   constructor() {
@@ -35,11 +32,22 @@ export default class Main {
   }
 
   enemyGenerate() {
-    if (databus.frame % 30 === 0) {
+    if (databus.frame % 20 === 0) {
       let enemy = databus.pool.getItemByClass('enemy', Enemy)
       enemy.init(6)
       databus.enemys.push(enemy)
     }
+  }
+
+  collisionDetection(){
+    databus.bullets.forEach(((bullet)=>{
+      databus.enemys.forEach((enemy)=>{
+        if(!enemy.isPlaying && enemy.isCollideWith(bullet)){
+          enemy.playAnimation()
+          bullet.visible = false
+        }
+      })
+    }))
   }
 
   render() {
@@ -52,8 +60,6 @@ export default class Main {
     })
 
     this.player.drawToCanvas(ctx)
-
-    // logo.drawLogo(ctx)
 
     databus.animations.forEach((ani) => {
       if (ani.isPlaying) {
@@ -80,9 +86,11 @@ export default class Main {
 
     this.enemyGenerate()
 
-    if (databus.frame % 60 === 0) {
+    if (databus.frame % 5 === 0) {
       this.player.shoot(ctx)
     }
+
+    this.collisionDetection()
   }
 
   loop() {
